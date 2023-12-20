@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  mydatabase:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    depends_on:
+      - mydatabase
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    ports:
+      - '5050:80'
